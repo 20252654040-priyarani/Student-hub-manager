@@ -1,0 +1,25 @@
+export type DepartmentCode = 'AI' | 'DS' | 'CS' | 'IT';
+export type AcademicYear = 'FY' | 'SY' | 'TY';
+export type Student = {
+  id: string;
+  studentId: string;
+  fullName: string;
+  email: string;
+  department: DepartmentCode | '';
+  year: AcademicYear | '';
+  isLegacy?: boolean;
+};
+export type StudentFormData = Omit<Student, 'id' | 'isLegacy'>;
+export const STORAGE_KEY: string;
+export const DEPARTMENTS: { code: DepartmentCode; label: string }[];
+export const ACADEMIC_YEARS: { code: AcademicYear; label: string }[];
+export const SEEDED_STUDENTS: Student[];
+export function createInitialStudents(): Student[];
+export function migrateStudents(value: unknown): Student[];
+export function parseStoredStudents(raw: string): { students: Student[]; valid: boolean };
+export function serializeStudents(students: Student[]): string;
+export function filterStudents(students: Student[], filters?: { query?: string; department?: string; year?: string }): Student[];
+export function countByDepartment(students: Student[]): Record<DepartmentCode, number>;
+export function addStudent(students: Student[], data: StudentFormData, id?: string): Student[];
+export function editStudent(students: Student[], id: string, data: StudentFormData): Student[];
+export function deleteStudent(students: Student[], id: string): Student[];
