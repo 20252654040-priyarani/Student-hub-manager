@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Student Management System"
+description = "A mobile-friendly student directory for viewing and managing student records, with search, course and year filters, and browser-based saving."
+version = "1.0.0"
+id = "artifacts/student-management"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18301
+
+[services.development]
+run = "pnpm --filter @workspace/student-management run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/student-management", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/student-management/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18301"
+BASE_PATH = "/"
